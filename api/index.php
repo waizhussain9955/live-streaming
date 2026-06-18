@@ -15,6 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // 2. Exception & Error Handler (Production Mode)
 set_error_handler(function($severity, $message, $file, $line) {
+    // Ignore deprecations and notices in production to prevent crashes
+    if ($severity === E_DEPRECATED || $severity === E_USER_DEPRECATED || $severity === E_NOTICE || $severity === E_USER_NOTICE) {
+        return;
+    }
     if (error_reporting() & $severity) {
         error_log("[PHP Error] $message in $file on line $line");
         sendError("Internal server error occurred", 500);
@@ -119,7 +123,8 @@ function parsePgArray($pgArrayString) {
     if (empty($trimmed)) {
         return [];
     }
-    $array = str_getcsv($trimmed, ',', '"');
+    // Explicitly pass escape parameter as '\\' to satisfy PHP 8.4 deprecation requirements
+    $array = str_getcsv($trimmed, ',', '"', '\\');
     return array_map('trim', $array);
 }
 
