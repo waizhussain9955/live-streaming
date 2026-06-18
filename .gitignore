@@ -1,0 +1,6 @@
+.env
+vendor/
+.vercel/
+.idea/
+.vscode/
+*.log

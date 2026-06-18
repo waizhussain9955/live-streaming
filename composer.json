@@ -1,0 +1,13 @@
+{
+  "name": "fifa-streaming/backend-api",
+  "description": "Serverless PHP backend API for FIFA World Cup 2026 Sports Streaming",
+  "type": "project",
+  "require": {
+    "php": "^8.2"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  }
+}
